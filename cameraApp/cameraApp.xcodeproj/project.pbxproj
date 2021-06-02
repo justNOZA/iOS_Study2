@@ -270,6 +270,7 @@
 				969F8ACE265F20F8003A2A70 /* Sources */,
 				969F8ACF265F20F8003A2A70 /* Frameworks */,
 				969F8AD0265F20F8003A2A70 /* Resources */,
+				B56E5F0767B68F0D9629E56A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -307,6 +308,7 @@
 				969F8AF2265F20F9003A2A70 /* Sources */,
 				969F8AF3265F20F9003A2A70 /* Frameworks */,
 				969F8AF4265F20F9003A2A70 /* Resources */,
+				073FD2F30FBB932AFFB106B7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -391,6 +393,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		073FD2F30FBB932AFFB106B7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cameraApp-cameraAppUITests/Pods-cameraApp-cameraAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cameraApp-cameraAppUITests/Pods-cameraApp-cameraAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cameraApp-cameraAppUITests/Pods-cameraApp-cameraAppUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B56E5F0767B68F0D9629E56A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cameraApp/Pods-cameraApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cameraApp/Pods-cameraApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cameraApp/Pods-cameraApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BCB6BE401493E7376044472B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
