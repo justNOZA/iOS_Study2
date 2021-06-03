@@ -8,7 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    var imgData : (UIImage, UIImage)?
     @IBOutlet weak var photoView: UIView!
     @IBAction func photoOn(_ sender: Any) {
         self.performSegue(withIdentifier: toView.camera.rawValue, sender: nil)
@@ -30,8 +31,8 @@ class ViewController: UIViewController {
     }
     @objc func ocrImage(){
         let modalViewController = storyboard?.instantiateViewController(identifier: "PhotoTextController") as! PhotoTextController
-        if photoView.subviews.count != 0, let data = photoView.subviews[0] as? UIImageView{
-            modalViewController.imageData = data.image
+        if photoView.subviews.count != 0{
+            modalViewController.imageData = imgData
         }
         present(modalViewController, animated: true, completion: nil)
     }
@@ -66,6 +67,7 @@ class ViewController: UIViewController {
 }
 extension ViewController : PhotoData{
     func getData(image: UIImage?, image2: UIImage?) {
+        imgData = (image!, image2!)
         let result = combineImage(image, image2)
         deleteImage()
         if let pd = result {

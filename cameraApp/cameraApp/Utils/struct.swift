@@ -32,3 +32,8 @@ enum alertDel: String {
     case title = "delete DB?"
     case message = "if you want delete all of DB, click yes"
 }
+
+struct categoryName {
+    let first = ["Product Name", "Velocity At 40 or 50", "COQ Density", "Water Constraint"]
+    let second = ["Flush Point", "Sulphur Content"]
+}

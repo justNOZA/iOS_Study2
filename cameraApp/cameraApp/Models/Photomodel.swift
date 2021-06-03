@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 protocol PhotoModelInput  {
-    func saveDataDB(_ list : [String]?)
+    func saveDataDB(_ list : [(name:String,value:String)]?)
     func getAllData() -> Results<PhotoValue>
     func deleteAllDB()
     func cleanDB()
@@ -26,12 +26,14 @@ class PhotoModel: PhotoModelInput {
         realm = try! Realm()
     }
     
-    func saveDataDB(_ list : [String]?){
+    func saveDataDB(_ list : [(name:String,value:String)]?){
         //Add DB
         for i in list! {
             let setValue = PhotoValue()
             setValue.index = incrementalIndex()
-            setValue.value = String(i)
+            setValue.value = i.value
+            setValue.category = i.name
+            setValue.create_dateTime = Utils.getDay()
             try! realm.write{
                 realm.add(setValue)
             }
@@ -71,6 +73,7 @@ class PhotoModel: PhotoModelInput {
         let userinfo = realm.objects(PhotoValue.self).filter("index == \(index)").first!
         try! realm.write {
             userinfo.value = value
+            userinfo.create_dateTime = Utils.getDay()
         }
     }
     

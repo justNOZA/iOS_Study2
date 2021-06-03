@@ -9,7 +9,9 @@ import RealmSwift
 
 class PhotoValue : Object {
     @objc dynamic var index = 0
+    @objc dynamic var category = ""
     @objc dynamic var value = ""
+    @objc dynamic var create_dateTime = "0000/00/00 00:00:00"
     
     override static func primaryKey() -> String? {
         return "index"

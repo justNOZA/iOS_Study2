@@ -111,10 +111,7 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
         image.draw(at: CGPoint(x: -rect2.origin.x / scale, y: -rect2.origin.y / scale))
         let croppedImage2 = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-//        let ocr = OCRReading()
-//        print(ocr.ocrRequest(image: croppedImage1!))
-//        print(ocr.ocrRequest(image: croppedImage2!))
-// 여기서 바로 읽어내는 것도 가능
+// ここですぐ読むのもできる
         return (croppedImage1, croppedImage2)
     }
 }

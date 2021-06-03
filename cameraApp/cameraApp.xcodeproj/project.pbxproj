@@ -14,6 +14,7 @@
 		96381B5526689D2900B109DC /* Photomodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96381B5426689D2900B109DC /* Photomodel.swift */; };
 		964171082664769300CA3E45 /* Photoprocess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964171072664769300CA3E45 /* Photoprocess.swift */; };
 		9641710A2664870400CA3E45 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964171092664870400CA3E45 /* extension.swift */; };
+		967CB3AF2668CA5900DA6DD8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967CB3AE2668CA5900DA6DD8 /* Utils.swift */; };
 		969F8AD6265F20F8003A2A70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969F8AD5265F20F8003A2A70 /* AppDelegate.swift */; };
 		969F8AD8265F20F8003A2A70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969F8AD7265F20F8003A2A70 /* SceneDelegate.swift */; };
 		969F8ADA265F20F8003A2A70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969F8AD9265F20F8003A2A70 /* ViewController.swift */; };
@@ -65,6 +66,7 @@
 		96381B572668AC1900B109DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		964171072664769300CA3E45 /* Photoprocess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photoprocess.swift; sourceTree = "<group>"; };
 		964171092664870400CA3E45 /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
+		967CB3AE2668CA5900DA6DD8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		969F8AD2265F20F8003A2A70 /* cameraApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cameraApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		969F8AD5265F20F8003A2A70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		969F8AD7265F20F8003A2A70 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				96C78A7E26609C15000B1E33 /* struct.swift */,
 				964171072664769300CA3E45 /* Photoprocess.swift */,
 				96F375322665FF6B000B9C4F /* OCRReading.swift */,
+				967CB3AE2668CA5900DA6DD8 /* Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				969F8ACE265F20F8003A2A70 /* Sources */,
 				969F8ACF265F20F8003A2A70 /* Frameworks */,
 				969F8AD0265F20F8003A2A70 /* Resources */,
+				434DF48AF26AFA9BCD75FA6D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -326,6 +330,7 @@
 				969F8AF2265F20F9003A2A70 /* Sources */,
 				969F8AF3265F20F9003A2A70 /* Frameworks */,
 				969F8AF4265F20F9003A2A70 /* Resources */,
+				CF5FB52FB608F58C8DC749F4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -412,6 +417,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		434DF48AF26AFA9BCD75FA6D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cameraApp/Pods-cameraApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cameraApp/Pods-cameraApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cameraApp/Pods-cameraApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BCB6BE401493E7376044472B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -456,6 +478,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CF5FB52FB608F58C8DC749F4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cameraApp-cameraAppUITests/Pods-cameraApp-cameraAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cameraApp-cameraAppUITests/Pods-cameraApp-cameraAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cameraApp-cameraAppUITests/Pods-cameraApp-cameraAppUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D5C516E4977F6D030B86412E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -494,6 +533,7 @@
 				969F8B1B265F2D23003A2A70 /* CamSetting.swift in Sources */,
 				969F8AD6265F20F8003A2A70 /* AppDelegate.swift in Sources */,
 				96DE7D8D2667620F00F239E2 /* RealmDB.swift in Sources */,
+				967CB3AF2668CA5900DA6DD8 /* Utils.swift in Sources */,
 				969F8B18265F2BFB003A2A70 /* PhotoTextController.swift in Sources */,
 				96F375332665FF6B000B9C4F /* OCRReading.swift in Sources */,
 				96381B5526689D2900B109DC /* Photomodel.swift in Sources */,

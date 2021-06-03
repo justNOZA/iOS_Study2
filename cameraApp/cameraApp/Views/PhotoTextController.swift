@@ -10,10 +10,10 @@ import RealmSwift
 
 class PhotoTextController : UIViewController {
     
-    var imageData : UIImage?
+    var imageData : (UIImage, UIImage)?
     var showDB : Bool = false
-    var DBData : ([Int], [String])?
-    var ReadData : [String]?
+    var DBData : [(index: Int,value:String)]?
+    var ReadData : [(name: String, value: String)]?
     var presenter : PhotoPresenter!
     
     @IBOutlet weak var listTable: UITableView!
@@ -31,7 +31,7 @@ class PhotoTextController : UIViewController {
             DBData = presenter.getAllData()
         }else {
             if imageData == nil {
-                ReadData = [NSLocalizedString("notext", comment: "")]
+                ReadData = [(NSLocalizedString("noPart", comment: ""),NSLocalizedString("notext", comment: ""))]
             }else {
                 ReadData = presenter.readImage(imageData!)
                 self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveDB)))
@@ -74,7 +74,7 @@ extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if showDB {
-            return DBData!.1.count
+            return DBData!.count
         } else {
             return ReadData!.count
         }
@@ -92,15 +92,15 @@ extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
         }
 
         if showDB {
-            cell.label1.text = String(DBData!.0[indexPath.row])
-            cell.label2.text = DBData!.1[indexPath.row]
+            cell.label1.text = String(DBData![indexPath.row].index)
+            cell.label2.text = DBData![indexPath.row].value
         }else {
             if imageData == nil {
-                cell.label1.text = "no DATA"
-                cell.label2.text = ReadData![0]
+                cell.label1.text = ReadData![0].name
+                cell.label2.text = ReadData![0].value
             }else {
-                cell.label1.text = String(indexPath.row+1)
-                cell.label2.text = ReadData![indexPath.row]
+                cell.label1.text = ReadData![indexPath.row].name
+                cell.label2.text = ReadData![indexPath.row].value
             }
         }
         
