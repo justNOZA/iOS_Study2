@@ -23,7 +23,12 @@ enum PortraitEffectsMatteDeliveryMode {
     case off
 }
 
-enum alert: String {
+enum alertSave: String {
     case title = "save DB?"
     case message = "if you want save value to DB, click yes"
+}
+
+enum alertDel: String {
+    case title = "delete DB?"
+    case message = "if you want delete all of DB, click yes"
 }

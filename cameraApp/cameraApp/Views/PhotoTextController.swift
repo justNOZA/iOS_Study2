@@ -32,11 +32,17 @@ class PhotoTextController : UIViewController {
     }
     
     @objc func saveDB(){
-        let alert = UIAlertController(title: alert.title.rawValue, message: alert.message.rawValue, preferredStyle: .alert)
+        let alert = UIAlertController(title: alertSave.title.rawValue, message: alertSave.message.rawValue, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "yes", style: .default, handler: { [self] action in
             saveDataDB()
         }))
-        alert.addAction(UIAlertAction(title: "no", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "no", style: .default, handler: { [self] action in
+            let alerts = UIAlertController(title: alertDel.title.rawValue, message: alertDel.message.rawValue, preferredStyle: .alert)
+            alerts.addAction(UIAlertAction(title: "yes", style: .default, handler: {[self] action in
+                deleteAllDB()
+            }))
+            alerts.addAction(UIAlertAction(title: "no", style: .default, handler: { action in}))
+            self.present(alerts, animated: true)
         }))
         self.present(alert, animated: true)
     }
@@ -49,10 +55,14 @@ extension PhotoTextController {
         //Add DB
         for i in list {
             let setValue = PhotoValue()
+            let setValue2 = PhotoValue2()
             setValue.index = incrementalIndex()
             setValue.value = String(i)
+            setValue2.index = incrementalIndex2()
+            setValue2.value = String(i)
             try! realm.write{
                 realm.add(setValue)
+                realm.add(setValue2)
             }
         }
     }
@@ -69,7 +79,7 @@ extension PhotoTextController {
         return (realm.objects(PhotoValue.self).max(ofProperty: "index") as Int? ?? 0)+1
     }
     
-    //delete All
+    //delete All _ in class
     func deleteAllDB(){
         let realm = try! Realm()
         //get All data from DB
@@ -78,6 +88,14 @@ extension PhotoTextController {
             try! realm.write{
                 realm.delete(models)
             }
+        }
+    }
+    
+    // all class clear
+    func cleanDB(){
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
         }
     }
     
@@ -90,7 +108,7 @@ extension PhotoTextController {
         }
     }
     
-    //delete select one
+    //delete select one _ imn clas
     func deleteOneDB(){
         let realm = try! Realm()
         let userinfo = realm.objects(PhotoValue.self).filter("index == 11").first!
