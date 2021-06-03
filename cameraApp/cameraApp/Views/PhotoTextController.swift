@@ -11,28 +11,29 @@ import RealmSwift
 class PhotoTextController : UIViewController {
     
     var imageData : UIImage?
-    var ocr = OCRReading()
     var showDB : Bool = false
-    var DBData : Results<PhotoValue>?
+    var DBData : ([Int], [String])?
     var ReadData : [String]?
+    var presenter : PhotoPresenter!
     
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var pageTitle: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = PhotoPresenter(view: self)
         listTable.delegate = self
         listTable.dataSource = self
         setCustomHeader()
         setTitle()
         
         if showDB {
-            DBData = getAllData()
+            DBData = presenter.getAllData()
         }else {
             if imageData == nil {
-                ReadData = [NSLocalizedString("no text", comment: "")]
+                ReadData = [NSLocalizedString("notext", comment: "")]
             }else {
-                ReadData = ocr.ocrRequest(image: imageData!)
+                ReadData = presenter.readImage(imageData!)
                 self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveDB)))
             }
         }
@@ -55,12 +56,12 @@ class PhotoTextController : UIViewController {
     @objc func saveDB(){
         let alert = UIAlertController(title: alertSave.title.rawValue, message: alertSave.message.rawValue, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "yes", style: .default, handler: { [self] action in
-            saveDataDB()
+            presenter.saveDataDB(ReadData)
         }))
         alert.addAction(UIAlertAction(title: "no", style: .default, handler: { [self] action in
             let alerts = UIAlertController(title: alertDel.title.rawValue, message: alertDel.message.rawValue, preferredStyle: .alert)
             alerts.addAction(UIAlertAction(title: "yes", style: .default, handler: {[self] action in
-                deleteAllDB()
+                presenter.deleteAllDB()
             }))
             alerts.addAction(UIAlertAction(title: "no", style: .default, handler: { action in}))
             self.present(alerts, animated: true)
@@ -69,84 +70,11 @@ class PhotoTextController : UIViewController {
     }
 }
 
-extension PhotoTextController {
-    func saveDataDB(){
-        let realm = try! Realm()
-        let list = ReadData!
-        //Add DB
-        for i in list {
-            let setValue = PhotoValue()
-            setValue.index = incrementalIndex()
-            setValue.value = String(i)
-            try! realm.write{
-                realm.add(setValue)
-            }
-        }
-    }
-    
-    func getAllData() -> Results<PhotoValue>{
-        let realm = try! Realm()
-        //get All Data
-        return realm.objects(PhotoValue.self)
-    }
-    
-    //index값 증가시켜서 가져오기
-    func incrementalIndex() -> Int {
-        let realm = try! Realm()
-        return (realm.objects(PhotoValue.self).max(ofProperty: "index") as Int? ?? 0)+1
-    }
-    
-    //delete All _ in class
-    func deleteAllDB(){
-        let realm = try! Realm()
-        //get All data from DB
-        let models = realm.objects(PhotoValue.self)
-        do {
-            try! realm.write{
-                realm.delete(models)
-            }
-        }
-    }
-    
-    // all class clear
-    func cleanDB(){
-        let realm = try! Realm()
-        try! realm.write {
-            realm.deleteAll()
-        }
-    }
-    
-    //update DB
-    func updateDataDB(){
-        let realm = try! Realm()
-        let userinfo = realm.objects(PhotoValue.self).filter("index == 11").first!
-        try! realm.write {
-            userinfo.value = "47"
-        }
-    }
-    
-    //delete select one _ imn clas
-    func deleteOneDB(){
-        let realm = try! Realm()
-        let userinfo = realm.objects(PhotoValue.self).filter("index == 11").first!
-        try! realm.write {
-            realm.delete(userinfo)
-        }
-    }
-    
-    //sort get
-    func sortedDataDB() -> Results<PhotoValue>{
-        let realm = try! Realm()
-        let data = realm.objects(PhotoValue.self).sorted(byKeyPath: "index", ascending: true) //오름차순
-        return data
-    }
-}
-
 extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if showDB {
-            return DBData!.count
+            return DBData!.1.count
         } else {
             return ReadData!.count
         }
@@ -158,20 +86,20 @@ extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
         cell.selectionStyle = .none
 
         if indexPath.row.isMultiple(of: 2){
-            cell.backgroundColor = .systemPink
+            cell.backgroundColor = UIColor(red: 255, green: 214, blue: 0, alpha: 0.2)
         }else{
             cell.backgroundColor = UIColor.white
         }
 
         if showDB {
-            cell.label1.text = String(DBData!.elements[indexPath.row].index)
-            cell.label2.text = DBData!.elements[indexPath.row].value
+            cell.label1.text = String(DBData!.0[indexPath.row])
+            cell.label2.text = DBData!.1[indexPath.row]
         }else {
             if imageData == nil {
                 cell.label1.text = "no DATA"
                 cell.label2.text = ReadData![0]
             }else {
-                cell.label1.text = String(indexPath.row)
+                cell.label1.text = String(indexPath.row+1)
                 cell.label2.text = ReadData![indexPath.row]
             }
         }

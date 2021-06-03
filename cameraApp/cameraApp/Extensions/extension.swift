@@ -42,4 +42,3 @@ extension AVCaptureDevice.DiscoverySession {
         return uniqueDevicePositions.count
     }
 }
-
