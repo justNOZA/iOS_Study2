@@ -10,12 +10,12 @@ import UIKit
 
 class OCRReading {
     
-    func ocrRequest(image: UIImage)->String?{
+    func ocrRequest(image: UIImage)->[String]?{
         var request = VNRecognizeTextRequest(completionHandler: nil)
         
         let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!)
         
-        var result:String?
+        var result:[String]?
         
         request = VNRecognizeTextRequest{ (request, error) in
             if let error = error {
@@ -34,7 +34,7 @@ class OCRReading {
         return result
     }
     
-    private func ocrRecognize(from request: VNRequest) -> String? {
+    private func ocrRecognize(from request: VNRequest) -> [String]? {
         guard let observations = request.results as? [VNRecognizedTextObservation] else {
             return nil
         }
@@ -44,6 +44,6 @@ class OCRReading {
             
             return topCandidate.string.trimmingCharacters(in: .whitespaces)
         }
-        return recognizedStrings.joined(separator: "\n")
+        return recognizedStrings
     }
 }

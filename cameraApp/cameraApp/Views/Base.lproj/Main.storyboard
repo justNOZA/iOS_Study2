@@ -40,11 +40,25 @@
                                 <accessibility key="accessibilityConfiguration" identifier="photoCollection"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyW-5Y-bAb">
-                                <rect key="frame" x="100" y="1124" width="634" height="30"/>
+                                <rect key="frame" x="100" y="1124" width="250" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="camera"/>
-                                <state key="normal" title="Camera"/>
+                                <state key="normal" title="Camera">
+                                    <color key="titleColor" systemColor="labelColor"/>
+                                </state>
                                 <connections>
                                     <action selector="photoOn:" destination="7yH-hd-UE5" eventType="touchUpInside" id="GX6-0P-7fa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4w4-YV-VEm">
+                                <rect key="frame" x="484" y="1124" width="250" height="30"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <state key="normal" title="show DB">
+                                    <color key="titleColor" systemColor="labelColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkDB:" destination="7yH-hd-UE5" eventType="touchUpInside" id="dqx-Nw-YgK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -54,6 +68,9 @@
                             <bool key="isElement" value="YES"/>
                         </accessibility>
                         <constraints>
+                            <constraint firstItem="kk4-ZJ-WMz" firstAttribute="trailing" secondItem="4w4-YV-VEm" secondAttribute="trailing" constant="100" id="1fO-wC-Caz"/>
+                            <constraint firstItem="4w4-YV-VEm" firstAttribute="bottom" secondItem="dyW-5Y-bAb" secondAttribute="bottom" id="9Wd-vj-Lfe"/>
+                            <constraint firstItem="4w4-YV-VEm" firstAttribute="width" secondItem="qnC-Nh-lmF" secondAttribute="width" multiplier="0.3" id="Cj7-UW-1yF"/>
                             <constraint firstItem="dyW-5Y-bAb" firstAttribute="top" secondItem="pSF-Mm-FUN" secondAttribute="bottom" constant="10" id="CpC-6v-4tK"/>
                             <constraint firstItem="dyW-5Y-bAb" firstAttribute="leading" secondItem="kk4-ZJ-WMz" secondAttribute="leading" constant="100" id="XyY-Wa-d8y"/>
                             <constraint firstItem="kk4-ZJ-WMz" firstAttribute="bottom" secondItem="pSF-Mm-FUN" secondAttribute="bottom" constant="60" id="Z1q-qP-b3c"/>
@@ -61,7 +78,7 @@
                             <constraint firstItem="pSF-Mm-FUN" firstAttribute="top" secondItem="kk4-ZJ-WMz" secondAttribute="top" constant="20" id="eZG-aW-aWc"/>
                             <constraint firstItem="kk4-ZJ-WMz" firstAttribute="bottom" secondItem="dyW-5Y-bAb" secondAttribute="bottom" constant="20" id="inM-6z-88o"/>
                             <constraint firstItem="kk4-ZJ-WMz" firstAttribute="trailing" secondItem="pSF-Mm-FUN" secondAttribute="trailing" constant="20" id="s3c-hq-v8b"/>
-                            <constraint firstItem="kk4-ZJ-WMz" firstAttribute="trailing" secondItem="dyW-5Y-bAb" secondAttribute="trailing" constant="100" id="xzy-Ae-5Ko"/>
+                            <constraint firstItem="dyW-5Y-bAb" firstAttribute="width" secondItem="qnC-Nh-lmF" secondAttribute="width" multiplier="0.3" id="vpV-WQ-QOe"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qS4-Ha-T5T"/>
@@ -83,10 +100,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1000" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Arc-5j-lsv">
-                                <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
-                                <accessibility key="accessibilityConfiguration" identifier="content"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="deE-z7-8Ho">
+                                <rect key="frame" x="20" y="120" width="664" height="855.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="pQk-sq-Wgc" customClass="MultiColumnTableViewCell" customModule="cameraApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="664" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pQk-sq-Wgc" id="aI4-sO-N3t">
+                                            <rect key="frame" x="0.0" y="0.0" width="664" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGq-xL-pLV">
+                                <rect key="frame" x="50" y="20" width="604" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -97,20 +127,24 @@
                             <bool key="isElement" value="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstItem="Arc-5j-lsv" firstAttribute="leading" secondItem="biv-eL-YPQ" secondAttribute="leading" id="2qG-aE-H0s"/>
-                            <constraint firstItem="Arc-5j-lsv" firstAttribute="top" secondItem="biv-eL-YPQ" secondAttribute="top" id="Rq2-XL-UcS"/>
-                            <constraint firstItem="biv-eL-YPQ" firstAttribute="bottom" secondItem="Arc-5j-lsv" secondAttribute="bottom" id="Yob-Ni-j0g"/>
-                            <constraint firstItem="biv-eL-YPQ" firstAttribute="trailing" secondItem="Arc-5j-lsv" secondAttribute="trailing" id="qk4-hv-zy0"/>
+                            <constraint firstItem="YGq-xL-pLV" firstAttribute="top" secondItem="biv-eL-YPQ" secondAttribute="top" constant="20" id="4A9-vK-QTw"/>
+                            <constraint firstItem="YGq-xL-pLV" firstAttribute="leading" secondItem="biv-eL-YPQ" secondAttribute="leading" constant="50" id="52U-9d-EU0"/>
+                            <constraint firstItem="biv-eL-YPQ" firstAttribute="bottom" secondItem="deE-z7-8Ho" secondAttribute="bottom" constant="20" id="bpZ-bF-ZIz"/>
+                            <constraint firstItem="biv-eL-YPQ" firstAttribute="trailing" secondItem="YGq-xL-pLV" secondAttribute="trailing" constant="50" id="cTB-gl-ecU"/>
+                            <constraint firstItem="deE-z7-8Ho" firstAttribute="top" secondItem="YGq-xL-pLV" secondAttribute="bottom" constant="100" id="d1b-7d-fM3"/>
+                            <constraint firstItem="biv-eL-YPQ" firstAttribute="trailing" secondItem="deE-z7-8Ho" secondAttribute="trailing" constant="20" id="iWp-ck-X0m"/>
+                            <constraint firstItem="deE-z7-8Ho" firstAttribute="leading" secondItem="biv-eL-YPQ" secondAttribute="leading" constant="20" id="sU3-gx-Rlc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="BcN-oT-9rC"/>
                     <connections>
-                        <outlet property="photoText" destination="Arc-5j-lsv" id="CEm-a2-MoR"/>
+                        <outlet property="listTable" destination="deE-z7-8Ho" id="lvc-Rc-Tx8"/>
+                        <outlet property="pageTitle" destination="YGq-xL-pLV" id="uX6-7k-ZIv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xeC-Re-Jff" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="373" y="75"/>
+            <point key="canvasLocation" x="371" y="65"/>
         </scene>
         <!--Cam View Controller-->
         <scene sceneID="VMa-ks-g1N">
@@ -141,6 +175,18 @@
                                     <action selector="captureImg:" destination="qdZ-l9-g14" eventType="touchUpInside" id="TVC-XQ-0eS"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XOI-pc-SnG">
+                                <rect key="frame" x="100" y="1059" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="8gl-dt-Etv"/>
+                                    <constraint firstAttribute="width" constant="75" id="8kw-EP-MyS"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <state key="normal" title="Button" image="cancle"/>
+                                <connections>
+                                    <action selector="cancleClick:" destination="qdZ-l9-g14" eventType="touchUpInside" id="yJu-Pf-F3C"/>
+                                </connections>
+                            </button>
                             <label hidden="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="camera Unavailable" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ad4-TJ-w3L">
                                 <rect key="frame" x="290.5" y="579" width="253.5" height="36"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -153,7 +199,9 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ad4-TJ-w3L" firstAttribute="centerX" secondItem="USk-a8-EjR" secondAttribute="centerX" id="C4U-zH-w9V"/>
+                            <constraint firstItem="XOI-pc-SnG" firstAttribute="leading" secondItem="USk-a8-EjR" secondAttribute="leading" constant="100" id="Ccq-od-Zug"/>
                             <constraint firstItem="ad4-TJ-w3L" firstAttribute="centerY" secondItem="mf1-gA-ZiI" secondAttribute="centerY" id="IM7-4c-Ljz"/>
+                            <constraint firstItem="USk-a8-EjR" firstAttribute="bottom" secondItem="XOI-pc-SnG" secondAttribute="bottom" constant="40" id="NRx-CJ-Vtq"/>
                             <constraint firstItem="7j1-CB-F58" firstAttribute="centerY" secondItem="mf1-gA-ZiI" secondAttribute="centerY" id="YQZ-sg-1Lt"/>
                             <constraint firstItem="7j1-CB-F58" firstAttribute="leading" secondItem="USk-a8-EjR" secondAttribute="leading" id="Zef-Eg-KPt"/>
                             <constraint firstItem="nvI-0q-43e" firstAttribute="centerX" secondItem="mf1-gA-ZiI" secondAttribute="centerX" id="eTD-4w-Wtu"/>
@@ -165,6 +213,7 @@
                     <navigationItem key="navigationItem" id="rk4-Ai-iOi"/>
                     <connections>
                         <outlet property="cameraUnavailableLabel" destination="ad4-TJ-w3L" id="d7O-yq-gpc"/>
+                        <outlet property="cancleButton" destination="XOI-pc-SnG" id="cuV-5O-bBz"/>
                         <outlet property="captureButton" destination="nvI-0q-43e" id="zBC-oh-WhJ"/>
                         <outlet property="previewView" destination="7j1-CB-F58" id="IRS-37-xh3"/>
                     </connections>
@@ -176,8 +225,15 @@
     </scenes>
     <resources>
         <image name="CapturePhoto" width="150" height="150"/>
+        <image name="cancle" width="1000" height="1000"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

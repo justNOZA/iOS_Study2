@@ -13,6 +13,11 @@ class ViewController: UIViewController {
     @IBAction func photoOn(_ sender: Any) {
         self.performSegue(withIdentifier: toView.camera.rawValue, sender: nil)
     }
+    @IBAction func checkDB(_ sender: Any) {
+        let modalViewController = storyboard?.instantiateViewController(identifier: "PhotoTextController") as! PhotoTextController
+        modalViewController.showDB = true
+        present(modalViewController, animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

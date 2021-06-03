@@ -14,6 +14,7 @@ class CamViewController: UIViewController {
     private var spinner: UIActivityIndicatorView!
     //photo capture button
     @IBOutlet weak var captureButton: UIButton!
+    @IBOutlet weak var cancleButton: UIButton!
     @IBOutlet weak var cameraUnavailableLabel: UILabel!
     
     @IBOutlet weak var previewView: PreviewView!
@@ -233,7 +234,10 @@ class CamViewController: UIViewController {
             self.inProgressPhotoCaptureDelegates[photoCaptureProcessor.requestedPhotoSettings.uniqueID] = photoCaptureProcessor
             self.photoOutput.capturePhoto(with: photoSettings, delegate: photoCaptureProcessor)
         }
-        
+    }
+    
+    @IBAction func cancleClick(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

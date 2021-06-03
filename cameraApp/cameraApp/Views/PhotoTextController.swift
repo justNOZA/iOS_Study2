@@ -10,24 +10,45 @@ import RealmSwift
 
 class PhotoTextController : UIViewController {
     
-    @IBOutlet weak var photoText: UILabel!
     var imageData : UIImage?
     var ocr = OCRReading()
+    var showDB : Bool = false
+    var DBData : Results<PhotoValue>?
+    var ReadData : [String]?
+    
+    @IBOutlet weak var listTable: UITableView!
+    @IBOutlet weak var pageTitle: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        readImagetoText()
-        if photoText.text == NSLocalizedString("no text", comment: ""){}
-        else {
-            self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveDB)))
+        listTable.delegate = self
+        listTable.dataSource = self
+        setCustomHeader()
+        setTitle()
+        
+        if showDB {
+            DBData = getAllData()
+        }else {
+            if imageData == nil {
+                ReadData = [NSLocalizedString("no text", comment: "")]
+            }else {
+                ReadData = ocr.ocrRequest(image: imageData!)
+                self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveDB)))
+            }
+        }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.async { [self] in
+            reloadTable()
         }
     }
     
-    private func readImagetoText(){
-        if let data = imageData {
-            photoText.text = ocr.ocrRequest(image: data)
+    private func setTitle(){
+        if showDB {
+            pageTitle.text = "SHOW DB"
         } else {
-            photoText.text = NSLocalizedString("no text", comment: "")
+            pageTitle.text = "READ IMAGE BY OCR"
         }
     }
     
@@ -51,18 +72,14 @@ class PhotoTextController : UIViewController {
 extension PhotoTextController {
     func saveDataDB(){
         let realm = try! Realm()
-        let list = photoText.text!.split(separator: "\n")
+        let list = ReadData!
         //Add DB
         for i in list {
             let setValue = PhotoValue()
-            let setValue2 = PhotoValue2()
             setValue.index = incrementalIndex()
             setValue.value = String(i)
-            setValue2.index = incrementalIndex2()
-            setValue2.value = String(i)
             try! realm.write{
                 realm.add(setValue)
-                realm.add(setValue2)
             }
         }
     }
@@ -122,5 +139,75 @@ extension PhotoTextController {
         let realm = try! Realm()
         let data = realm.objects(PhotoValue.self).sorted(byKeyPath: "index", ascending: true) //오름차순
         return data
+    }
+}
+
+extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if showDB {
+            return DBData!.count
+        } else {
+            return ReadData!.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "multiColumnCell", for: indexPath) as! MultiColumnTableViewCell
+
+        cell.selectionStyle = .none
+
+        if indexPath.row.isMultiple(of: 2){
+            cell.backgroundColor = .systemPink
+        }else{
+            cell.backgroundColor = UIColor.white
+        }
+
+        if showDB {
+            cell.label1.text = String(DBData!.elements[indexPath.row].index)
+            cell.label2.text = DBData!.elements[indexPath.row].value
+        }else {
+            if imageData == nil {
+                cell.label1.text = "no DATA"
+                cell.label2.text = ReadData![0]
+            }else {
+                cell.label1.text = String(indexPath.row)
+                cell.label2.text = ReadData![indexPath.row]
+            }
+        }
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 65
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //Add subviews here
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableHeader") as! TableHeader
+        
+        headerView.label1.text = "INDEX num"
+        headerView.label2.text = "Value"
+//        
+        return headerView
+    }
+    
+    func setCustomHeader(){
+        listTable.separatorStyle = .none
+        
+        let nib = UINib(nibName: "TableCloumn", bundle: nil)
+        listTable.register(nib, forCellReuseIdentifier: "multiColumnCell")
+        
+        let Headernib = UINib(nibName: "TableHeader", bundle: Bundle.main)
+        listTable.register(Headernib, forHeaderFooterViewReuseIdentifier: "TableHeader")
+    }
+    
+    func reloadTable() {
+        listTable.reloadData()
     }
 }
