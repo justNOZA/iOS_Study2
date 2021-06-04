@@ -14,6 +14,7 @@ enum SessionSetupResult {
 }
 
 enum toView: String {
+    case db = "showDB"
     case text = "showText"
     case camera = "showCamera"
 }
@@ -34,6 +35,5 @@ enum alertDel: String {
 }
 
 struct categoryName {
-    let first = ["Product Name", "Velocity At 40 or 50", "COQ Density", "Water Constraint"]
-    let second = ["Flush Point", "Sulphur Content"]
+    let list = ["Product Name", "Velocity At 40 or 50", "COQ Density", "Water Constraint", "Flush Point", "Sulphur Content"]
 }

@@ -15,8 +15,7 @@ class ViewController: UIViewController {
         self.performSegue(withIdentifier: toView.camera.rawValue, sender: nil)
     }
     @IBAction func checkDB(_ sender: Any) {
-        let modalViewController = storyboard?.instantiateViewController(identifier: "PhotoTextController") as! PhotoTextController
-        modalViewController.showDB = true
+        let modalViewController = storyboard?.instantiateViewController(identifier: "DBViewController") as! DBViewController
         present(modalViewController, animated: true, completion: nil)
     }
     override func viewDidLoad() {

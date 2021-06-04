@@ -11,8 +11,6 @@ import RealmSwift
 class PhotoTextController : UIViewController {
     
     var imageData : (UIImage, UIImage)?
-    var showDB : Bool = false
-    var DBData : [(index: Int,value:String)]?
     var ReadData : [(name: String, value: String)]?
     var presenter : PhotoPresenter!
     
@@ -26,16 +24,12 @@ class PhotoTextController : UIViewController {
         listTable.dataSource = self
         setCustomHeader()
         setTitle()
-        
-        if showDB {
-            DBData = presenter.getAllData()
+
+        if imageData == nil {
+            ReadData = [(NSLocalizedString("noPart", comment: ""),NSLocalizedString("notext", comment: ""))]
         }else {
-            if imageData == nil {
-                ReadData = [(NSLocalizedString("noPart", comment: ""),NSLocalizedString("notext", comment: ""))]
-            }else {
-                ReadData = presenter.readImage(imageData!)
-                self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveDB)))
-            }
+            ReadData = presenter.readImage(imageData!)
+            self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveDB)))
         }
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -46,11 +40,7 @@ class PhotoTextController : UIViewController {
     }
     
     private func setTitle(){
-        if showDB {
-            pageTitle.text = "SHOW DB"
-        } else {
-            pageTitle.text = "READ IMAGE BY OCR"
-        }
+        pageTitle.text = "READ IMAGE BY OCR"
     }
     
     @objc func saveDB(){
@@ -59,6 +49,7 @@ class PhotoTextController : UIViewController {
             presenter.saveDataDB(ReadData)
         }))
         alert.addAction(UIAlertAction(title: "no", style: .default, handler: { [self] action in
+            
             let alerts = UIAlertController(title: alertDel.title.rawValue, message: alertDel.message.rawValue, preferredStyle: .alert)
             alerts.addAction(UIAlertAction(title: "yes", style: .default, handler: {[self] action in
                 presenter.deleteAllDB()
@@ -73,11 +64,7 @@ class PhotoTextController : UIViewController {
 extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if showDB {
-            return DBData!.count
-        } else {
-            return ReadData!.count
-        }
+        return ReadData!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,17 +78,12 @@ extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
             cell.backgroundColor = UIColor.white
         }
 
-        if showDB {
-            cell.label1.text = String(DBData![indexPath.row].index)
-            cell.label2.text = DBData![indexPath.row].value
+        if imageData == nil {
+            cell.label1.text = ReadData![0].name
+            cell.label2.text = ReadData![0].value
         }else {
-            if imageData == nil {
-                cell.label1.text = ReadData![0].name
-                cell.label2.text = ReadData![0].value
-            }else {
-                cell.label1.text = ReadData![indexPath.row].name
-                cell.label2.text = ReadData![indexPath.row].value
-            }
+            cell.label1.text = ReadData![indexPath.row].name
+            cell.label2.text = ReadData![indexPath.row].value
         }
         
         return cell
@@ -119,7 +101,7 @@ extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
         //Add subviews here
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableHeader") as! TableHeader
         
-        headerView.label1.text = "INDEX num"
+        headerView.label1.text = "Category"
         headerView.label2.text = "Value"
 //        
         return headerView
@@ -137,5 +119,17 @@ extension PhotoTextController : UITableViewDelegate, UITableViewDataSource{
     
     func reloadTable() {
         listTable.reloadData()
+    }
+    
+    func dispErrorAlert(_ str: String) {
+        let alert = UIAlertController(title: "", message: str, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "再試行", style: .default, handler: { [self] action in
+            self.ReadData = self.presenter.readImage(self.imageData!)
+            self.reloadTable()
+        }))
+        alert.addAction(UIAlertAction(title: "キャンセル", style: .default, handler: { [self] action in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true)
     }
 }

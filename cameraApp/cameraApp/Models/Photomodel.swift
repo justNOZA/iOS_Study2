@@ -9,13 +9,11 @@ import Foundation
 import RealmSwift
 
 protocol PhotoModelInput  {
-    func saveDataDB(_ list : [(name:String,value:String)]?)
-    func getAllData() -> Results<PhotoValue>
     func deleteAllDB()
     func cleanDB()
-    func updateDataDB(_ index : Int, _ value : String)
     func deleteOneDB(_ index : Int)
-    func sortedDataDB() -> Results<PhotoValue>
+    func saveDataDB(_ info: [String], _ time: String)
+    func updateDataDB(_ index : Int, _ value : String, _ name : Int, _ time: String)
 }
 
 class PhotoModel: PhotoModelInput {
@@ -25,31 +23,6 @@ class PhotoModel: PhotoModelInput {
     init(){
         realm = try! Realm()
     }
-    
-    func saveDataDB(_ list : [(name:String,value:String)]?){
-        //Add DB
-        for i in list! {
-            let setValue = PhotoValue()
-            setValue.index = incrementalIndex()
-            setValue.value = i.value
-            setValue.category = i.name
-            setValue.create_dateTime = Utils.getDay()
-            try! realm.write{
-                realm.add(setValue)
-            }
-        }
-    }
-    
-    func getAllData() -> Results<PhotoValue>{
-        //get All Data
-        return realm.objects(PhotoValue.self)
-    }
-    
-    //index값 증가시켜서 가져오기
-    func incrementalIndex() -> Int {
-        return (realm.objects(PhotoValue.self).max(ofProperty: "index") as Int? ?? 0)+1
-    }
-    
     //delete All _ in class
     func deleteAllDB(){
         //get All data from DB
@@ -68,15 +41,6 @@ class PhotoModel: PhotoModelInput {
         }
     }
     
-    //update DB
-    func updateDataDB(_ index : Int, _ value : String){
-        let userinfo = realm.objects(PhotoValue.self).filter("index == \(index)").first!
-        try! realm.write {
-            userinfo.value = value
-            userinfo.create_dateTime = Utils.getDay()
-        }
-    }
-    
     //delete select one _ imn clas
     func deleteOneDB(_ index : Int){
         let userinfo = realm.objects(PhotoValue.self).filter("index == \(index)").first!
@@ -85,9 +49,40 @@ class PhotoModel: PhotoModelInput {
         }
     }
     
-    //sort get
-    func sortedDataDB() -> Results<PhotoValue>{
-        let data = realm.objects(PhotoValue.self).sorted(byKeyPath: "index", ascending: true) //오름차순
-        return data
+    //update DB
+    func updateDataDB(_ index : Int, _ value : String, _ name : Int, _ time: String){
+        let userinfo = realm.objects(PhotoValue.self).filter("index == \(index)").first!
+        try! realm.write {
+            switch name {
+            case 0: userinfo.product_Name = value
+            case 1: userinfo.Velocity_At_40_or_50 = value
+            case 2: userinfo.COQ_Density = value
+            case 3: userinfo.Water_Constraint = value
+            case 4: userinfo.Flush_Point = value
+            case 5: userinfo.Sulphur_Content = value
+            default: return
+            }
+            userinfo.update_dateTime = time
+        }
+    }
+    
+    func saveDataDB(_ info: [String], _ time: String){
+        //Add DB
+        let setValue = PhotoValue()
+        setValue.index = incrementalIndex()
+        setValue.product_Name = info[0]
+        setValue.Velocity_At_40_or_50 = info[1]
+        setValue.COQ_Density = info[2]
+        setValue.Water_Constraint = info[3]
+        setValue.Flush_Point = info[4]
+        setValue.Sulphur_Content = info[5]
+        setValue.create_dateTime = time
+        try! realm.write{
+            realm.add(setValue)
+        }
+    }
+    //index값 증가시켜서 가져오기
+    func incrementalIndex() -> Int {
+        return (realm.objects(PhotoValue.self).max(ofProperty: "index") as Int? ?? 0)+1
     }
 }

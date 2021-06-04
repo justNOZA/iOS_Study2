@@ -7,3 +7,5 @@
 */
 "notext" = "Please take a picture first.";
 "noPart" = "no DATA";
+"ERROR OCRReading" = "OCR have Problem one more reaction plz";
+"NO_DB" = "There is no data stored in DB.";
