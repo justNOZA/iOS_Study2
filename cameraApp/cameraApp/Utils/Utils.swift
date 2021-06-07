@@ -15,4 +15,9 @@ class Utils {
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter.string(from: date)
     }
+    
+    static func getToDay() -> Date {
+        let date = Date()
+        return date
+    }
 }

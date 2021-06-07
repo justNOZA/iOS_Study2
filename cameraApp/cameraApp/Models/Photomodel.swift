@@ -12,8 +12,8 @@ protocol PhotoModelInput  {
     func deleteAllDB()
     func cleanDB()
     func deleteOneDB(_ index : Int)
-    func saveDataDB(_ info: [String], _ time: String)
-    func updateDataDB(_ index : Int, _ value : String, _ name : Int, _ time: String)
+    func saveDataDB(_ info: [Any], _ time: Date)
+//    func updateDataDB(_ index : Int, _ value : String, _ name : Int, _ time: String)
 }
 
 class PhotoModel: PhotoModelInput {
@@ -48,7 +48,7 @@ class PhotoModel: PhotoModelInput {
             realm.delete(userinfo)
         }
     }
-    
+/*
     //update DB
     func updateDataDB(_ index : Int, _ value : String, _ name : Int, _ time: String){
         let userinfo = realm.objects(PhotoValue.self).filter("index == \(index)").first!
@@ -65,17 +65,17 @@ class PhotoModel: PhotoModelInput {
             userinfo.update_dateTime = time
         }
     }
-    
-    func saveDataDB(_ info: [String], _ time: String){
+*/
+    func saveDataDB(_ info: [Any], _ time: Date){
         //Add DB
         let setValue = PhotoValue()
         setValue.index = incrementalIndex()
-        setValue.product_Name = info[0]
-        setValue.Velocity_At_40_or_50 = info[1]
-        setValue.COQ_Density = info[2]
-        setValue.Water_Constraint = info[3]
-        setValue.Flush_Point = info[4]
-        setValue.Sulphur_Content = info[5]
+        setValue.product_Name = info[0] as! String
+        setValue.Velocity_At_40_or_50 = info[1] as! String
+        setValue.COQ_Density = info[2] as! Double
+        setValue.Water_Constraint = info[3] as! String
+        setValue.Flush_Point = info[4] as! String
+        setValue.Sulphur_Content = info[5] as! String
         setValue.create_dateTime = time
         try! realm.write{
             realm.add(setValue)

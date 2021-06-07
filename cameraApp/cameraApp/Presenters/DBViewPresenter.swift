@@ -10,8 +10,8 @@ import RealmSwift
 
 protocol DBViewPresenterInput: AnyObject {
 
-    func getAllData() -> [(Int, [String], (String,String))]
-    func sortedDataDB() -> [(Int, [String], String)]
+    func getAllData() -> [(Int, [Any], (Date,Date?))]
+//    func sortedDataDB() -> [(Int, [String], String)]
     
 }
 
@@ -28,21 +28,17 @@ class DBViewPresenter: DBViewPresenterInput {
     }
 
     
-    func getAllData() -> [(Int, [String], (String,String))]{
+    func getAllData() -> [(Int, [Any], (Date,Date?))]{
         let result = model.getAllData()
-        var data: [(Int, [String], (String,String))] = []
+        var data: [(Int, [Any], (Date,Date?))] = []
         for i in result.elements {
-            let value = [i.product_Name, i.Velocity_At_40_or_50, i.COQ_Density, i.Water_Constraint, i.Flush_Point, i.Sulphur_Content]
-            if i.update_dateTime == "0000/00/00" {
-                data.append((i.index, value, (i.create_dateTime, "no update")))
-            }else {
-                data.append((i.index, value, (i.create_dateTime, i.update_dateTime)))
-            }
+            let value = [i.product_Name, i.Velocity_At_40_or_50, i.COQ_Density, i.Water_Constraint, i.Flush_Point, i.Sulphur_Content] as [Any]
+            data.append((i.index, value, (i.create_dateTime, i.update_dateTime)))
         }
         //get All Data
         return data
     }
-
+/*
     //sort get
     func sortedDataDB() -> [(Int, [String], String)]{
         let result = model.sortedDataDB()
@@ -58,5 +54,5 @@ class DBViewPresenter: DBViewPresenterInput {
         //get All Data
         return data
     }
-    
+    */
 }

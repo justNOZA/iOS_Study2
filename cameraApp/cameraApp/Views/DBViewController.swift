@@ -16,7 +16,7 @@ class DBViewController : UIViewController {
     
     var imageData : (UIImage, UIImage)?
     var showDB : Bool = false
-    var DBData : [(index:Int, value:[String], time:(String,String))]?
+    var DBData : [(index:Int, value:[Any], time:(Date,Date?))]?
     var presenter : DBViewPresenter!
     
     override func viewDidLoad() {
@@ -102,17 +102,20 @@ extension DBViewController : UICollectionViewDataSource, UICollectionViewDelegat
             align(cell, .center)
             
             cell.index.text = String(DBData![indexPath.row-1].index)
-            cell.value1.text = DBData![indexPath.row-1].value[0]
-            cell.value2.text = DBData![indexPath.row-1].value[1]
-            cell.value3.text = DBData![indexPath.row-1].value[2]
-            cell.value4.text = DBData![indexPath.row-1].value[3]
-            cell.value5.text = DBData![indexPath.row-1].value[4]
-            cell.value6.text = DBData![indexPath.row-1].value[5]
-            cell.saveDay.text = DBData![indexPath.row-1].time.0
-            if DBData![indexPath.row-1].time.1 == "no update" {
-                cell.updateDay.text = ""
+            cell.value1.text = DBData![indexPath.row-1].value[0] as? String
+            cell.value2.text = DBData![indexPath.row-1].value[1] as? String
+            cell.value3.text = String(DBData![indexPath.row-1].value[2] as! Double)
+            cell.value4.text = DBData![indexPath.row-1].value[3] as? String
+            cell.value5.text = DBData![indexPath.row-1].value[4] as? String
+            cell.value6.text = DBData![indexPath.row-1].value[5] as? String
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy/MM/dd"
+            cell.saveDay.text = formatter.string(from: DBData![indexPath.row-1].time.0)
+            if let uday = DBData![indexPath.row-1].time.1 {
+                cell.updateDay.text = formatter.string(from: uday)
             } else {
-                cell.updateDay.text = DBData![indexPath.row-1].time.1
+                cell.updateDay.text = ""
             }
         }
         return cell

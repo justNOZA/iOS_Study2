@@ -11,12 +11,12 @@ class PhotoValue : Object {
     @objc dynamic var index = 0
     @objc dynamic var product_Name = ""
     @objc dynamic var Velocity_At_40_or_50 = ""
-    @objc dynamic var COQ_Density = ""
+    @objc dynamic var COQ_Density : Double = 0.0
     @objc dynamic var Water_Constraint = ""
     @objc dynamic var Flush_Point = ""
     @objc dynamic var Sulphur_Content = ""
-    @objc dynamic var create_dateTime = "0000/00/00"
-    @objc dynamic var update_dateTime = "0000/00/00"
+    @objc dynamic var create_dateTime : Date!
+    @objc dynamic var update_dateTime : Date?
     
     override static func primaryKey() -> String? {
         return "index"

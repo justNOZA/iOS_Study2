@@ -13,8 +13,8 @@ protocol PhotoPresenterInput: AnyObject {
     func cleanDB()
     func deleteOneDB(_ index : Int)
     
-    func saveDataDB(_ list : [(name:String,value:String)]?)
-    func updateDataDB(_ index : Int, _ value : String, _ name : String)
+    func saveDataDB(_ list : [(name:String,value:Any)]?)
+//    func updateDataDB(_ index : Int, _ value : String, _ name : String)
 
     func readImage(_ image: (UIImage, UIImage)) -> [(String, String)]
 }
@@ -43,20 +43,26 @@ class PhotoPresenter: PhotoPresenterInput {
     func deleteOneDB(_ index : Int){
         model.deleteOneDB(index)
     }
-    func saveDataDB(_ list : [(name:String,value:String)]?){
-        var info:[String] = []
+    func saveDataDB(_ list : [(name:String,value:Any)]?){
+        let cate = categoryName()
+        var info:[Any] = []
         for i in list! {
-            info.append(i.value)
+            if i.name == cate.list[2]{
+                info.append(Double(i.value as! String))
+            }else {
+                info.append(i.value as! String)
+            }
+            
         }
-        let time = Utils.getDay()
+        let time = Utils.getToDay()
         model.saveDataDB(info, time)
     }
-    //update DB
-    func updateDataDB(_ index : Int, _ value : String, _ name : String){
-        let list = categoryName()
-        let num = list.list.lastIndex(of: name)!
-        model.updateDataDB(index, value, num, Utils.getDay())
-    }
+//    //update DB
+//    func updateDataDB(_ index : Int, _ value : String, _ name : String){
+//        let list = categoryName()
+//        let num = list.list.lastIndex(of: name)!
+//        model.updateDataDB(index, value, num, Utils.getDay())
+//    }
     
     func readImage(_ image: (UIImage, UIImage)) -> [(String, String)] {
         
