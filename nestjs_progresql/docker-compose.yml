@@ -1,0 +1,13 @@
+version: '3.0'
+
+services: 
+    database:
+        build: ./postgreSql
+        ports: 
+            - "3333:3333"
+    server:
+        build: ./study-nest
+        volumes: 
+            - ./study-nest:/home/node/app
+        ports:
+            - "3000:3000"
