@@ -1,12 +1,31 @@
 version: '3.0'
 
 services: 
+    prisma:
+        env_file: ./.env
+        image: prismagraphql/prisma
+        ports: 
+            - "3339:3339"
+        environment: 
+            databases:
+                default:
+                    connector: postgres
+                    host: postgres
+                    port: 3333
+                    user: ${DB_USER}
+                    password: ${DB_PASSWORD}
     database:
+        env_file: ./.env
         build: ./postgreSql
+        restart: always
         ports: 
             - "3333:3333"
+        environment: 
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
     server:
         build: ./study-nest
+        restart: always
         volumes: 
             - ./study-nest:/home/node/app
         ports:
