@@ -1,6 +1,6 @@
 create database weather;
 create table nagoya (
-   day date primary key generated always as identity,
+   day date not null,
    day_of_week varchar(20) not null,
    weather varchar(20) not null,
    temperature real not null,
@@ -14,3 +14,5 @@ insert into nagoya values('2021-06-04', '金曜日', '雨', 23.1, 70);
 insert into nagoya values('2021-06-05', '土曜日', '雲', 25.7, 10);
 insert into nagoya values('2021-06-06', '日曜日', '晴れ', 28, 60);
 insert into nagoya values('2021-06-07', '月曜日', '晴れ', 31, 1);
+
+commit;

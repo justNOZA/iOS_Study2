@@ -10,4 +10,4 @@ services:
         volumes: 
             - ./study-nest:/home/node/app
         ports:
-            - "3000:3000"
+            - "8888:3000"
