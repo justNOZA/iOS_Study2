@@ -3,9 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { WeatherController } from './weather/weather.controller';
 
+import { PrismaService } from './prisma/prisma.service';
+import { PrismaModule } from './prisma/prisma.module';
+
 @Module({
-  imports: [],
+  imports: [PrismaModule, PrismaModule],
   controllers: [AppController, WeatherController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
+  exports: [],
 })
 export class AppModule {}
