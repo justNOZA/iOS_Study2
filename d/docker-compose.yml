@@ -1,9 +1,9 @@
 version: '3.0'
 
-services:      
-    postgresdb:
-        container_name: postgresdb
-        image: postgres:13
+services:       
+    postgres:
+        container_name: postgres
+        build: ./study-postgres
         restart: always
         ports: 
             - 5432:5432
@@ -13,11 +13,9 @@ services:
             POSTGRES_DB: ${POSTGRES_DB}
     server:
         container_name: server
-        build: ./ttc-study
+        build: ./study-nest
         restart: always
         volumes: 
-            - ./ttc-study:/home/node/app
+            - ./study-nest:/home/node/app
         ports:
             - "8888:3000"
-        depends_on: 
-            - postgresdb
