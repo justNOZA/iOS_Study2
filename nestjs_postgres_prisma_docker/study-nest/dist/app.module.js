@@ -11,14 +11,17 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const weather_controller_1 = require("./weather/weather.controller");
+const area_controller_1 = require("./area/area.controller");
+const prisma_service_1 = require("./prisma/prisma.service");
+const region_service_1 = require("./region/region.service");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
         imports: [],
-        controllers: [app_controller_1.AppController, weather_controller_1.WeatherController],
-        providers: [app_service_1.AppService, app_service_1.PrismaService],
-        exports: [app_service_1.PrismaService],
+        controllers: [app_controller_1.AppController, weather_controller_1.WeatherController, area_controller_1.AreaController],
+        providers: [app_service_1.AppService, prisma_service_1.PrismaService, region_service_1.RegionService],
+        exports: [prisma_service_1.PrismaService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

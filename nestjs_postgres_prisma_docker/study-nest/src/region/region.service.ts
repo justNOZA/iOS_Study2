@@ -18,17 +18,16 @@ export class RegionService {
             where?: Prisma.regionWhereInput;
             orderBy?: Prisma.regionOrderByInput;
             select?: Prisma.regionSelect;
-        }) {
+        }): Promise<{}[]> {
         const { skip, take, cursor, where, orderBy, select} = params;
-        var data = this.prisma.region.findMany({
-            select,
+        return this.prisma.region.findMany({
             skip,
+            select,
             take,
             cursor,
             where,
             orderBy,
         });
-        console.log(typeof(data));
     }
     
     async createRegion(data: Prisma.regionCreateInput): Promise<region> {
