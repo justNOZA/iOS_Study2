@@ -17,3 +17,10 @@ model nagoya {
   temperature Decimal
   rainy_percent Int @default(0)
 }
+
+model region {
+  area_id Int @id @default(autoincrement())
+  area_name String @unique
+  create_date DateTime @default(now())
+  update_date DateTime @updatedAt
+}
