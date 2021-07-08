@@ -2,7 +2,7 @@ name: 'my_new_project'          # dbt project name
 version: '1.0.0'                # dbt project version
 config-version: 2
 
-profile: 'tutorial'         # ~/.dbt/profiles.ymlからデータベースに接続するために使用するプロファイルの名前を示します
+profile: 'snowflakeTutorial'         # ~/.dbt/profiles.ymlからデータベースに接続するために使用するプロファイルの名前を示します
 
 source-paths: ["models"]        # モデルを作成するためにスクリプトを保存するディレクトリを示します
 analysis-paths: ["analysis"]    
